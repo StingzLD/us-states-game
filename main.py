@@ -13,13 +13,16 @@ imported_data = pandas.read_csv("50_states.csv")
 
 # Initialize variables
 states_guessed = []
-correct_answers = 0
 
 # Play game
 while len(states_guessed) < 50:
     # Get a state name from the player
-    answer = screen.textinput(title=f"{correct_answers}/50 States Correct",
+    answer = screen.textinput(title=f"{len(states_guessed)}/50 States Correct",
                                     prompt="What is a state's name?").title()
+
+    # Stop the game if you cannot think of any more
+    if answer == "Exit":
+        break
 
     # If answer has already been guessed, ask again
     if answer in states_guessed:
@@ -44,5 +47,11 @@ while len(states_guessed) < 50:
         # Add state to states_guessed
         states_guessed.append(answer)
 
-        # Increase correct_answers by one
-        correct_answers += 1
+# Export states that were missed
+missing_states = []
+if len(states_guessed) < 50:
+    for state in imported_data.state:
+        if state not in states_guessed:
+            missing_states.append(state)
+export_data = pandas.DataFrame(missing_states)
+export_data.to_csv("states_to_learn.csv")

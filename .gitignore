@@ -130,3 +130,4 @@ dmypy.json
 
 # JetBrains
 .idea/
+/states_to_learn.csv
