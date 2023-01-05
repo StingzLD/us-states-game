@@ -48,10 +48,6 @@ while len(states_guessed) < 50:
         states_guessed.append(answer)
 
 # Export states that were missed
-missing_states = []
-if len(states_guessed) < 50:
-    for state in imported_data.state:
-        if state not in states_guessed:
-            missing_states.append(state)
+missing_states = [state for state in imported_data.state if state not in states_guessed]
 export_data = pandas.DataFrame(missing_states)
 export_data.to_csv("states_to_learn.csv")
